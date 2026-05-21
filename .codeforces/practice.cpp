@@ -1,37 +1,25 @@
-#include <iostream>
-#include <stack>
-#include <cctype>
-#include <string>
+#include<bits/stdc++.h>
 using namespace std;
+int main()
+{
+    int n;
+    cin >> n;
+    int ans = 0;
+    for(int i=0; i<n; i++)
+    {
+        int sum = 0;
+        for(int i=0; i<3; i++)
+        {
+            int x;
+            cin >> x;
+            sum += x;
+        }
 
-int evaluatePostfix(string postfix) {
-    stack<int> values;
-
-    for (char c : postfix) {
-        if (isdigit(c)) {
-            values.push(c - '0'); // Convert char to int and push to stack
-        } else {
-            int val2 = values.top(); values.pop();
-            int val1 = values.top(); values.pop();
-
-            switch(c) {
-                case '+': values.push(val1 + val2); break;
-                case '-': values.push(val1 - val2); break;
-                case '*': values.push(val1 * val2); break;
-                case '/': values.push(val1 / val2); break;
-            }
+        if(sum >= 2)
+        {
+            ans++;
         }
     }
 
-    return values.top(); // The final result will be the only value in the stack
-}
-
-int main() {
-    string postfix;
-    cout << "Enter postfix expression: ";
-    cin >> postfix;
-
-    int result = evaluatePostfix(postfix);
-    cout << "Result of postfix expression: " << result << endl;
-    return 0;
+    cout << ans;
 }

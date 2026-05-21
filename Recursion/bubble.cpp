@@ -1,31 +1,30 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
-void bubble(int arr[] , int r, int c)
+void bubbleSort(vector<int> &arr, int n)
 {
-    if(r==0)
+    //basecase
+    if(n == 1)
+    return ;
+
+    for(int i=0; i<n-1; i++)
     {
-        return;
-    }
-    if(c < r)
-    {
-        if(arr[c] > arr[c+1])
+        if(arr[i] > arr[i+1])
         {
-            swap(arr[c] , arr[c+1]);
+            swap(arr[i], arr[i+1]);
         }
-        bubble(arr,r,c+1);
     }
-    else{
-        bubble(arr,r-1,0);
-    }
+
+    bubbleSort(arr, n-1);
 }
 int main()
 {
-    int arr[] = {4,2,1,3,9,5};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    bubble(arr, 6,0);
+    vector<int> arr = {2, 8, 4, 0, 1, 7, 4};
+    int n = arr.size();
+
+    bubbleSort(arr, n);
+
     for(int i=0; i<n; i++)
     {
-        cout << arr[i] << "  " ; 
+        cout << arr[i] << "  ";
     }
 }
