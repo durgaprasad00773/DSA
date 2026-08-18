@@ -68,7 +68,6 @@ vector<int> inorder(node* root)
 
     }
     return ans;
-
 }
 vector<int> preorder(node* root)
 {

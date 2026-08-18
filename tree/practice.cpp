@@ -1,60 +1,92 @@
 #include <iostream>
+#include <vector>
 #include <queue>
 using namespace std;
 class node
 {
     public:
     int data;
-    node* left, *right;
-    node(int x)
+    node* left , *right;
+    node(int value)
     {
-        data = x;
+        data = value;
         left = right = NULL;
     }
 };
-node* tree()
+node* tree(vector<int> & arr, int & index)
 {
-    int x;
-    cout << "Enter node value : ";
-    cin >> x;
-    if(x == -1)
-    return NULL;
-
-    node* temp = new node(x);
-    temp -> left = tree();
-    temp -> right = tree();
-
+    if(index >= arr.size() || arr[index] == -1)
+    {
+        index++;
+        return NULL;
+    }
+    node* temp = new node(arr[index]);
+    index++;
+    //left 
+    temp -> left = tree(arr, index);
+    //right
+    temp -> right = tree(arr, index);
     return temp;
 }
-void inorder(node * root)
+void preorder(node* ptr)
 {
-    if(root == NULL)
-    return ;
-
-    inorder(root -> left);
-    cout << root -> data << "  ";
-    inorder(root -> right);
-}
-void level(node* root)
-{
-    queue<node*> q;
-    q.push(root);
-    while(!q.empty())
+    if(ptr == NULL)
     {
-        node* temp = q.front();
-        q.pop();
-        cout << temp -> data << "  ";
-        if(temp -> left)
-        q.push(temp -> left);
-        if(temp -> right)
-        q.push(temp -> right);
-        
+        return ;
     }
+    cout << ptr -> data << "  ";
+    //left
+    preorder(ptr -> left);
+    //right
+    preorder(ptr -> right);
+}
+void inorder(node* ptr)
+{
+    if(ptr == NULL)
+    {
+        return ;
+    }
+    //left
+    inorder(ptr -> left);
+    cout << ptr -> data << "  ";
+    inorder(ptr -> right);
+
+}void postorder(node* ptr)
+{
+    if(ptr == NULL)
+    {
+        return ;
+    }
+    postorder(ptr -> left);
+    postorder(ptr -> right);
+    cout << ptr  -> data << "  ";
+}
+void levelorder(queue<node*> &q)
+{   
+    if(q.empty())
+    return ;
+    
+    node* ptr = q.front();
+    q.pop();
+
+    if(ptr != NULL)
+    {
+        cout << ptr -> data << "  ";
+        q.push(ptr -> left);
+        q.push(ptr -> right);
+    }
+
+    levelorder(q);
 }
 int main()
 {
-    node* root = NULL;
-    root = tree();
+    queue <node*> q;
 
-    level(root);
+    vector<int> arr = {1, 2, 3, 4, -1, -1, 5, -1, -1, -1, 20, -1, -1};
+    int index = 0;
+    node* root;
+    root = tree(arr, index);
+    q.push(root);
+
+    levelorder(q);
 }
